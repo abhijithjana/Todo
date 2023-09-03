@@ -1,12 +1,17 @@
 package com.project.TodoList.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.project.TodoList.Todo;
 
+
+@Service
 public class TodoService {
-private static List<Todo> todolist;
+private static List<Todo> todolist=new ArrayList<Todo>();
 
 static {
 	todolist.add(new Todo(1,"Abhijith","SpringBoot", LocalDate.now().plusMonths(1), false));
