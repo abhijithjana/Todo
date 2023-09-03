@@ -1,9 +1,11 @@
 package com.project.TodoList.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @SessionAttributes("uname")
-public class TodoController {
+public class TodoController implements ErrorController {
     @Autowired
 	private TodoService todo;
     
@@ -31,7 +33,7 @@ public class TodoController {
     	return "Login";
     }
     
-    @RequestMapping(value = "auth",method = RequestMethod.POST)
+    @RequestMapping(value = "login",method = RequestMethod.POST)
     public String auth(HttpServletRequest req,ModelMap model,HttpServletResponse res) throws ServletException, IOException {
     	String name=req.getParameter("uname");
     	String pass=req.getParameter("upass");
@@ -53,4 +55,19 @@ public class TodoController {
 		model.addAttribute("todos",todolist);
 		return "listtodo";
 	}
+	
+	@RequestMapping(value="add-todo",method = RequestMethod.GET)
+	public String addtodo() {
+			return "Addtodo";
+	}
+	
+	@RequestMapping(value="add-todo",method = RequestMethod.POST)
+	public String savetodo(@RequestParam String discription,ModelMap model) {
+		    String uname=(String)model.get("uname");
+			todo.addTodo(new Todo(++todo.sl,uname,discription,LocalDate.now().plusYears(1), false));
+			return "redirect:/list-todo";
+	}
+
+	
+	
 }

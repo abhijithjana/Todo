@@ -36,7 +36,7 @@
 </c:forEach>
 </tbody>
 </table>
-<button type="button" class="btn btn-success">Add Todo</button>
+<a  href="add-todo" class="btn btn-success">Add Todo</a>
 </div>
 </body>
 </html>

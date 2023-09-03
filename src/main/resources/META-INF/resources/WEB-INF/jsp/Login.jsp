@@ -17,10 +17,10 @@
           class="img-fluid" alt="Phone image">
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-      <div class="p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">
+      <div class="p-3 text-warning-emphasis    rounded-3">
   ${error}
 </div>
-        <form action="auth" method="post">
+        <form  method="post">
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input name="uname" type="text" id="form1Example13" class="form-control form-control-lg" />
