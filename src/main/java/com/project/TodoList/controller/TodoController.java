@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,11 +21,12 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 
 @Controller
 @SessionAttributes("uname")
-public class TodoController implements ErrorController {
+public class TodoController{
     @Autowired
 	private TodoService todo;
     
@@ -40,7 +42,7 @@ public class TodoController implements ErrorController {
     	if(name.equalsIgnoreCase(pass))
 //    		return "redirect:/list-todo";
     	{
-    		model.put("uname",name);
+    		
     		RequestDispatcher rd=req.getRequestDispatcher("/list-todo");
     		rd.forward(req,res);
     	}
@@ -57,14 +59,46 @@ public class TodoController implements ErrorController {
 	}
 	
 	@RequestMapping(value="add-todo",method = RequestMethod.GET)
-	public String addtodo() {
+	public String addtodo(ModelMap model) {
+		 String uname=(String)model.get("uname");
+		 model.put("action","add-todo");
+		 model.put("todo",new Todo(0,uname,"", null, false));
 			return "Addtodo";
 	}
 	
 	@RequestMapping(value="add-todo",method = RequestMethod.POST)
-	public String savetodo(@RequestParam String discription,ModelMap model) {
+	public String savetodo(ModelMap model,@Valid Todo t,BindingResult result) {
+		if(result.hasErrors()) {
+			return "Addtodo";
+		}
 		    String uname=(String)model.get("uname");
-			todo.addTodo(new Todo(++todo.sl,uname,discription,LocalDate.now().plusYears(1), false));
+			todo.addTodo(new Todo(++todo.sl,uname,t.getDisc(),t.getTarget(), false));
+			return "redirect:/list-todo";
+	}
+	
+	@RequestMapping(value="update-todo",method = RequestMethod.GET)
+	public String updatetodo(@RequestParam int id,ModelMap model) {
+		 
+		  Todo t=todo.findbyid(id);
+		 model.put("todo",t);
+		 model.put("action","update-todo");
+			return "Addtodo";
+	}
+	
+	@RequestMapping(value="update-todo",method = RequestMethod.POST)
+	public String updatetodos(ModelMap model,@Valid Todo t,BindingResult result) {
+		if(result.hasErrors()) {
+			return "Addtodo";
+		}
+		    String uname=(String)model.get("uname");
+			todo.updatebyid(t);
+			return "redirect:/list-todo";
+	}
+	
+	
+	@RequestMapping(value="remove-id",method = RequestMethod.GET)
+	public String removebyid(@RequestParam int id) {
+		   todo.removebyid(id);
 			return "redirect:/list-todo";
 	}
 

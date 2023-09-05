@@ -1,12 +1,16 @@
 package com.project.TodoList;
 
 import java.time.LocalDate;
+import java.util.Objects;
+
+import jakarta.validation.constraints.Size;
 
 public class Todo {
 
 	
 	private int id;
 	private String username;
+	@Size(min = 10,message = "Enter atleast 10 character")
 	private String disc;
 	private LocalDate target;
 	private boolean done;
@@ -53,5 +57,22 @@ public class Todo {
 		return "Todo [id=" + id + ", username=" + username + ", disc=" + disc + ", target=" + target + ", done=" + done
 				+ "]";
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Todo other = (Todo) obj;
+		return id == other.id;
+	}
+	
+	
 	
 }
