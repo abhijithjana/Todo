@@ -30,25 +30,12 @@ public class TodoController{
     @Autowired
 	private TodoService todo;
     
-    @RequestMapping("login")
-    public String login() {
-    	return "Login";
+    @RequestMapping("/")
+    public String welcome() {
+    	return "home";
     }
     
-    @RequestMapping(value = "login",method = RequestMethod.POST)
-    public String auth(HttpServletRequest req,ModelMap model,HttpServletResponse res) throws ServletException, IOException {
-    	String name=req.getParameter("uname");
-    	String pass=req.getParameter("upass");
-    	if(name.equalsIgnoreCase(pass))
-//    		return "redirect:/list-todo";
-    	{
-    		
-    		RequestDispatcher rd=req.getRequestDispatcher("/list-todo");
-    		rd.forward(req,res);
-    	}
-    	model.put("error","Invalid credential");
-    	return "Login";
-    }
+   
 	
 	@RequestMapping("list-todo")
 	
