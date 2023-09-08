@@ -3,12 +3,19 @@ package com.project.TodoList;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Todo {
 
-	
+	@Id
+	@GeneratedValue
 	private int id;
+	@NotNull
 	private String username;
 	@Size(min = 10,message = "Enter atleast 10 character")
 	private String disc;
@@ -22,6 +29,12 @@ public class Todo {
 		this.target = target;
 		this.done = done;
 	}
+	
+	public Todo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}

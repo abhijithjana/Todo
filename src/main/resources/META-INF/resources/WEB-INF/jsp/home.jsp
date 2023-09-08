@@ -8,5 +8,4 @@
             <p>Get organized and keep track of your tasks.</p>
         </div>
     </div>
-</body>
-</html>
+<%@ include file="common/footer.jspf" %>

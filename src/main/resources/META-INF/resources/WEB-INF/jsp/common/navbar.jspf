@@ -11,10 +11,16 @@
         </li>
          <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="list-todo">Mytodos</a>
-        </li>
+        </li> 
         
         
         </ul>  
+          <div class="d-flex">
+           <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+          </div>
+         
+       
+        
    
     </div>
   </div>
